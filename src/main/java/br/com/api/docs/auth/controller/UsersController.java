@@ -1,5 +1,6 @@
 package br.com.api.docs.auth.controller;
 
+import br.com.api.docs.auth.dto.TokenDTO;
 import br.com.api.docs.auth.dto.UserDTO;
 import br.com.api.docs.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class UsersController {
     }
 
     @PostMapping("/auth")
-    public void auth() {
-
+    public ResponseEntity<TokenDTO> auth(@RequestBody UserDTO user) {
+        TokenDTO tokenResponse = this.userService.authenticateUser(user);
+        return ResponseEntity.ok(tokenResponse);
     }
 
 }
