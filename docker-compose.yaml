@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=authdocs-db
+      - POSTGRES_USER=authdocs-user
+      - POSTGRES_PASSWORD=authdocs-password
