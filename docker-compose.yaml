@@ -6,6 +6,20 @@ services:
     ports:
       - "5433:5432"
     environment:
-      - POSTGRES_DB=authdocs-db
-      - POSTGRES_USER=authdocs-user
-      - POSTGRES_PASSWORD=authdocs-password
+      - POSTGRES_DB=authdocs_db
+      - POSTGRES_USER=authdocs_user
+      - POSTGRES_PASSWORD=authdocs_password
+
+  app:
+    container_name: authdocs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/authdocs_db
+      SPRING_DATASOURCE_USERNAME: authdocs_user
+      SPRING_DATASOURCE_PASSWORD: authdocs_password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db

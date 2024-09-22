@@ -29,5 +29,5 @@ public class ExceptionHandlerEntity extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.badRequest().body(errorMessage);
     }
-    
+
 }
