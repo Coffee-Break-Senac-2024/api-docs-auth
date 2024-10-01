@@ -59,7 +59,11 @@ jobs:
             docker pull bielxrd/authdocs:latest
             docker stop authdocs || true
             docker rm authdocs || true
-            docker run -d -p 8080:8080 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e DATABASE_USER=${{ secrets.DATABASE_USER }} -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --name auth-docs bielxrd/authdocs
+            docker run -d -p 8080:8080 \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            -e DATABASE_USER=${{ secrets.DATABASE_USER }} \
+            -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            --name auth-docs bielxrd/authdocs
           EOF
         
       - name: Clean up
