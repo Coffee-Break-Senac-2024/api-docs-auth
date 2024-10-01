@@ -12,6 +12,10 @@ COPY --from=build /app/target/*.jar /app/app.jar
 
 WORKDIR /app
 
+ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_USER=${DATABASE_USER}
+ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
+
 EXPOSE 8080
 
 CMD ["java", "-jar", "app.jar"]
