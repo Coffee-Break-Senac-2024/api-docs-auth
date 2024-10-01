@@ -55,11 +55,12 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-            ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "docker pull bielxrd/authdocs:latest && \
-            docker stop authdocs || true && \
-            docker rm authdocs || true && \
-            docker run -d -p 8080:8080 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e DATABASE_USER=${{ secrets.DATABASE_USER }} -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --name auth-docs bielxrd/authdocs"
-      
+            ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+              docker pull bielxrd/authdocs:latest &&
+              docker stop authdocs || true &&
+              docker rm authdocs || true &&
+              docker run -d -p 8080:8080 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e DATABASE_USER=${{ secrets.DATABASE_USER }} -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --name auth-docs bielxrd/authdocs:latest
+            EOF
 
       - name: Clean up
         run: rm ec2_key.pem
