@@ -6,13 +6,14 @@ import br.com.api.docs.auth.dto.UserDTO;
 import br.com.api.docs.auth.exceptions.AlreadyRegisteredException;
 import br.com.api.docs.auth.exceptions.InputException;
 import br.com.api.docs.auth.repositories.UserRepository;
+import br.com.api.docs.auth.validator.ValidationResult;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import br.com.api.docs.auth.validator.UserValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -25,11 +26,19 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserValidator userValidator;
+
     @Value("${docs.secret}")
     private String secretKey;
 
     public void createUser(UserDTO userDTO) {
-        this.userRepository.findByEmail(userDTO.getEmail())
+        ValidationResult validationResult = userValidator.validate(userDTO);
+
+        if (!validationResult.isValid()) {
+            throw new InputException(validationResult.getMessage());
+        }
+
+        this.userRepository.findByEmailAndDocument(userDTO.getEmail(), userDTO.getDocument())
                 .ifPresentOrElse((action) -> {
                     throw new AlreadyRegisteredException("Já existe cadastro com esse email");
                 }, () -> {
@@ -38,6 +47,7 @@ public class UserService {
                     User user = new User();
                     user.setEmail(userDTO.getEmail());
                     user.setPasword(passwordEncoded);
+                    user.setDocument(userDTO.getDocument());
 
                     this.userRepository.save(user);
                 });

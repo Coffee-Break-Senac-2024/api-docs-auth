@@ -13,9 +13,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String pasword;
+
+    @Column(name = "document", unique = true, length = 11, nullable = false)
+    private String document;
 
 }
