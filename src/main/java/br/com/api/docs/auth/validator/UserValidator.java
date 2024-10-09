@@ -1,6 +1,5 @@
 package br.com.api.docs.auth.validator;
 
-import br.com.api.docs.auth.dto.UserDTO;
 import br.com.api.docs.auth.dto.UserRequest;
 import br.com.api.docs.auth.validator.strategy.UserDocumentValidator;
 import br.com.api.docs.auth.validator.strategy.UserEmailValidator;
