@@ -49,6 +49,7 @@ public class UserService {
                     String passwordEncoded = this.passwordEncoder.encode(userDTO.getPassword());
 
                     User user = new User();
+                    user.setName(userDTO.getName());
                     user.setEmail(userDTO.getEmail());
                     user.setPasword(passwordEncoded);
                     user.setDocument(userDTO.getDocument());
