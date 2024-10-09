@@ -3,7 +3,6 @@ package br.com.api.docs.auth.service;
 import br.com.api.docs.auth.domain.User;
 import br.com.api.docs.auth.dto.ChangePasswordRequest;
 import br.com.api.docs.auth.dto.TokenDTO;
-import br.com.api.docs.auth.dto.UserDTO;
 import br.com.api.docs.auth.dto.UserRequest;
 import br.com.api.docs.auth.dto.UserResponse;
 import br.com.api.docs.auth.exceptions.AlreadyRegisteredException;
