@@ -68,6 +68,7 @@ public class UserService {
             throw new InputException("Email/Senha errados");
         }
 
+
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         Instant instant = Instant.now().plus(Duration.ofHours(3));
         String token = JWT.create()
